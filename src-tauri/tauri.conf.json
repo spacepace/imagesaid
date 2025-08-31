@@ -5,16 +5,19 @@
   "identifier": "com.liudo.imagesaid",
   "build": {
     "beforeDevCommand": "npm run dev",
-    "devUrl": "http://localhost:1420",
+    "devUrl": "http://127.0.0.1:1420",
     "beforeBuildCommand": "npm run build",
     "frontendDist": "../dist"
   },
   "app": {
     "windows": [
       {
-        "title": "imagesaid",
-        "width": 800,
-        "height": 600
+        "title": "ImageSaid - AI看图重命名",
+        "width": 1200,
+        "height": 800,
+        "minWidth": 800,
+        "minHeight": 600,
+        "dragDropEnabled": true
       }
     ],
     "security": {

@@ -1,7 +1,237 @@
-# Tauri + React + Typescript
+# ImageSaid - AI看图重命名
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+一个基于本地 Vision Language Models (Ollama) 的智能批量图片重命名工具。
 
-## Recommended IDE Setup
+## 🎯 项目简介
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+ImageSaid 是一个跨平台桌面应用程序，使用 AI 技术为图片生成描述性的文件名。它支持多种图片格式，通过拖拽操作实现批量处理，并提供灵活的提示词模板管理功能。
+
+## ✨ 主要功能
+
+### 🖼️ 图片处理
+- **多格式支持**: JPG, PNG, JPEG, WEBP, AVIF
+- **拖拽操作**: 支持文件拖拽和文件选择器
+- **批量处理**: 一次性处理多张图片
+- **智能压缩**: 根据模型上下文窗口自动压缩图片
+
+### 🤖 AI 重命名
+- **本地模型**: 基于 Ollama 本地 Vision Language Models
+- **自定义提示词**: 支持自定义重命名规则
+- **模板管理**: 保存和复用提示词模板
+- **实时预览**: 处理前预览生成的文件名
+
+### ⚙️ 模型管理
+- **自动检测**: 自动发现本地 Ollama 模型
+- **模型配置**: 自定义上下文窗口大小
+- **启用/禁用**: 灵活控制可用模型
+- **默认设置**: 设置默认使用的模型
+
+### 💾 数据持久化
+- **设置保存**: 自动保存用户配置
+- **模板持久化**: 提示词模板永久保存
+- **模型配置**: 模型设置跨会话保持
+
+## 🛠️ 技术栈
+
+### 前端
+- **React 18** - 用户界面框架
+- **TypeScript** - 类型安全
+- **Material-UI (MUI) v5** - UI 组件库
+- **Zustand** - 状态管理
+- **Vite** - 构建工具
+
+### 后端
+- **Rust** - 高性能后端
+- **Tauri** - 跨平台桌面应用框架
+- **reqwest** - HTTP 客户端
+- **image** - 图片处理库
+- **serde** - 序列化/反序列化
+
+### AI 集成
+- **Ollama** - 本地 AI 模型服务
+- **Vision Language Models** - 视觉语言模型
+- **Base64 编码** - 图片数据传输
+
+## 📦 安装要求
+
+### 系统要求
+- **Windows 10+** / **macOS 10.15+** / **Linux**
+- **4GB+ RAM** (推荐 8GB+)
+- **2GB+ 可用磁盘空间**
+
+### 必需软件
+1. **Ollama** - [下载地址](https://ollama.ai/)
+2. **Node.js 18+** - [下载地址](https://nodejs.org/)
+3. **Rust** - [下载地址](https://rustup.rs/)
+
+### 推荐的 AI 模型
+- `qwen2.5vl:3b-32k` - 推荐，中文支持好
+- `llava:7b` - 通用视觉模型
+- `qwen2.5vl:7b-10k` - 高质量但较大
+- `gemma3:4b-40k` - 轻量级选择
+
+## 🚀 快速开始
+
+### 1. 安装 Ollama
+```bash
+# 下载并安装 Ollama
+# 访问 https://ollama.ai/ 下载对应平台版本
+
+# 拉取推荐模型
+ollama pull qwen2.5vl:3b-32k
+```
+
+### 2. 启动 Ollama 服务
+```bash
+# 启动 Ollama 服务
+ollama serve
+```
+
+### 3. 构建和运行 ImageSaid
+```bash
+# 克隆项目
+git clone <repository-url>
+cd ImageSaid
+
+# 安装依赖
+npm install
+
+# 开发模式运行
+npm run tauri dev
+
+# 构建生产版本
+npm run tauri build
+```
+
+## 📖 使用指南
+
+### 基本操作流程
+
+1. **启动应用**
+   - 确保 Ollama 服务正在运行
+   - 启动 ImageSaid 应用
+
+2. **配置 Ollama**
+   - 点击 "Ollama设置" 按钮
+   - 确认 API 地址为 `http://localhost:11434`
+   - 点击 "测试连接" 验证服务状态
+   - 选择并配置要使用的模型
+
+3. **添加图片**
+   - 将图片文件拖拽到应用窗口
+   - 或点击 "选择文件" 按钮浏览选择
+
+4. **设置提示词**
+   - 选择或创建提示词模板
+   - 编辑提示词内容
+   - 保存为模板（可选）
+
+5. **生成文件名**
+   - 点击 "生成文件名" 按钮
+   - 等待 AI 处理完成
+   - 预览生成的文件名
+
+6. **应用重命名**
+   - 确认文件名无误后
+   - 点击 "应用重命名" 按钮
+   - 完成批量重命名操作
+
+### 提示词模板示例
+
+#### 基础描述模板
+```
+请用简洁的中文描述图片内容，格式为"场景_主体_动作"，例如："草地_金毛犬_接飞盘"。
+```
+
+#### 详细描述模板
+```
+请详细描述图片中的主要内容，包括场景、主体、动作、颜色等，格式为"场景_主体_动作_特征"。
+```
+
+#### 时间地点模板
+```
+请描述图片内容并包含拍摄时间或地点信息，格式为"时间_地点_内容"。
+```
+
+## 🔧 高级配置
+
+### 模型上下文窗口设置
+- 根据模型能力调整上下文窗口大小
+- 较大的上下文窗口可以处理更复杂的图片
+- 较小的上下文窗口处理速度更快
+
+### 图片压缩策略
+- 系统自动根据模型上下文窗口压缩图片
+- 优先通过降低 JPEG 质量压缩
+- 必要时调整图片尺寸
+
+### 自定义 API 地址
+- 支持自定义 Ollama API 地址
+- 适用于远程 Ollama 服务
+- 支持 HTTPS 连接
+
+## 🐛 故障排除
+
+### 常见问题
+
+**Q: 连接 Ollama 失败**
+A: 确保 Ollama 服务正在运行，检查 API 地址是否正确
+
+**Q: 图片处理失败**
+A: 检查图片格式是否支持，确保文件路径正确
+
+**Q: 模型加载失败**
+A: 确认模型已正确安装，检查网络连接
+
+**Q: 重命名操作失败**
+A: 检查文件权限，确保目标路径可写
+
+### 日志查看
+- 开发模式：查看控制台输出
+- 生产模式：检查应用日志文件
+
+## 🤝 贡献指南
+
+欢迎提交 Issue 和 Pull Request！
+
+### 开发环境设置
+```bash
+# 安装 Rust 工具链
+rustup install stable
+
+# 安装 Tauri CLI
+cargo install tauri-cli
+
+# 安装前端依赖
+npm install
+
+# 启动开发服务器
+npm run tauri dev
+```
+
+### 代码规范
+- 使用 TypeScript 严格模式
+- 遵循 Rust 编码规范
+- 添加适当的注释和文档
+- 编写单元测试
+
+## 📄 许可证
+
+本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+
+## 🙏 致谢
+
+- [Ollama](https://ollama.ai/) - 本地 AI 模型服务
+- [Tauri](https://tauri.app/) - 跨平台桌面应用框架
+- [Material-UI](https://mui.com/) - React UI 组件库
+- [Zustand](https://github.com/pmndrs/zustand) - 状态管理库
+
+## 📞 联系方式
+
+如有问题或建议，请通过以下方式联系：
+- 提交 GitHub Issue
+- 发送邮件至项目维护者
+
+---
+
+**ImageSaid** - 让 AI 为您的图片命名 🎨✨
